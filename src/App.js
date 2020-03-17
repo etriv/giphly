@@ -9,7 +9,7 @@ function App() {
   const [curPage, setCurPage] = useState(0);
 
   const gifsPageLimit = 12;   // Number of gifs to display in each page
-  const pageAmount = 10;      // The number of pages to fill with gifs
+  const pagesAmount = 10;      // The number of pages to fill with gifs
 
   const [searchText, setSearchText] = useState('dogs');
 
@@ -30,7 +30,7 @@ function App() {
   }
 
   function onSearchClick() {
-    fetchGifs(searchText, gifsOffset, gifsPageLimit * pageAmount)
+    fetchGifs(searchText, gifsOffset, gifsPageLimit * pagesAmount)
       .then(data => {
         console.log('Fetched gifs:', data);
         setCurPage(1);
@@ -44,6 +44,18 @@ function App() {
 
   function onPageChange(newPage) {
     setCurPage(newPage);
+
+    // If standing on the last (saved) page, fetch more gifs
+    if (newPage > gifs.length / gifsPageLimit - 1) {
+      fetchGifs(searchText, gifs.length, gifsPageLimit * pagesAmount)
+        .then(data => {
+          console.log('Fetched gifs:', data);
+          setTotalGifsCount(data.totalCount);
+          setGifs([...gifs, ...data.newGifs]);
+        }).catch(err => {
+          console.log('Error while fetching gifs:', err);
+        });
+    }
   }
 
   return (
@@ -56,7 +68,8 @@ function App() {
         onKeyUp={onKeyUp} />
       <button className="search-button"
         onClick={onSearchClick}>
-        🔍</button>
+        <span role="img" aria-label="magnify glass">🔍</span>
+        </button>
       {curPage > 0 ?
         <PageNav curPage={curPage}
           totalPages={Math.ceil(totalGifsCount / gifsPageLimit)}
@@ -64,7 +77,7 @@ function App() {
         : null}
       <div className="gallery">
         {gifs.length > 0 ?
-          gifs.slice((curPage-1) * gifsPageLimit, (curPage-1) * gifsPageLimit + gifsPageLimit)
+          gifs.slice((curPage - 1) * gifsPageLimit, (curPage - 1) * gifsPageLimit + gifsPageLimit)
             .map((gif, index) =>
               <div className="gif-container"
                 style={{
