@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
     width: 96%;
-    margin: 0.5rem auto;
+    margin: 1rem auto;
 
     .gif-container {
       // border: 1px dotted blue;
@@ -25,7 +25,21 @@
       background-position: center center;
       background-color: #fff;
       background-repeat: no-repeat;
-      border-radius: 5px 5px 0 0;
+      border-radius: 5px;
+    }
+  }
+
+  .page-nav {
+    // border: 1px dotted red;
+    // width: 800px;
+    margin: 1rem auto;
+
+    .nav-numbers {
+      display: inline;
+      margin: 0rem 2rem;
+    }
+    .nav-btn {
+      width: 6rem;
     }
   }
 }
