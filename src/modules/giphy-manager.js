@@ -32,7 +32,7 @@ function fetchGifs(search, offset, limit) {
 
 function convertToNonEmbededUrl(url) {
     const dotIndex = url.indexOf('.');
-    const newUrl = 'i' + url.slice(dotIndex);
+    const newUrl = 'https://i' + url.slice(dotIndex);
     return newUrl;
   }
 
