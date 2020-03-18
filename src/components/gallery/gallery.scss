@@ -1,0 +1,30 @@
+.gallery {
+    .gallery-grid {
+        // border: 1px dotted purple;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 96%;
+        margin: 1rem auto;
+    
+        .gif-container {
+            // border: 1px dotted blue;
+            // width: 200px;
+            min-width: 250px;
+            max-width: 500px;
+            // min-height: 150px;
+            // max-height: 250px;
+            height: 250px;
+            margin: 0.3rem;
+            flex: 1 1 23%;
+    
+            background-size: cover;
+            background-position: center center;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            border-radius: 5px;
+        }
+    }
+}
+

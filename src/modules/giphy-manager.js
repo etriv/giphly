@@ -17,7 +17,7 @@ function fetchGifs(search, offset, limit) {
                 }));
 
                 return { totalCount: res.pagination.total_count,
-                    coount: res.pagination.count,
+                    count: res.pagination.count,
                     offset: res.pagination.offset,
                     newGifs };
             }
