@@ -11,7 +11,7 @@ function fetchGifs(search, offset, limit) {
                 newGifs = res.data.map(gif => ({
                     title: gif.title,
                     stillUrl: convertToNonEmbededUrl(gif.images.original_still.url),
-                    imageUrl: convertToNonEmbededUrl(gif.images.original.url),
+                    gifUrl: convertToNonEmbededUrl(gif.images.original.url),
                     giphyUrl: gif.url,
                     giphyId: gif.id
                 }));
