@@ -7,7 +7,7 @@ import Gallery from './components/gallery/gallery';
 function App() {
   const [gifs, setGifs] = useState([]);
   const [totalGifsCount, setTotalGifsCount] = useState(0);
-  const [clickedGifId, setClickedGifId] = useState(-1);
+  const [gifToView, setGifToView] = useState(-1);
   const [searchText, setSearchText] = useState('dogs');
   const [fetchingNewSearch, setFetchingNewSearch] = useState(false);
   const gifsBulkSize = 120;
@@ -36,28 +36,30 @@ function App() {
         setTotalGifsCount(data.totalCount);
         setGifs(data.newGifs);
         setFetchingNewSearch(false);
-      }).catch(err => {
+      })
+      .catch(err => {
         console.log('Error while fetching gifs:', err);
       });
   }
 
   function fetchMoreGifs() {
     fetchGifs(searchText, gifs.length, gifsBulkSize)
-    .then(data => {
-      console.log('Fetched gifs:', data);
-      setTotalGifsCount(data.totalCount);
-      setGifs([...gifs, ...data.newGifs]);
-    }).catch(err => {
-      console.log('Error while fetching gifs:', err);
-    });
+      .then(data => {
+        console.log('Fetched gifs:', data);
+        setTotalGifsCount(data.totalCount);
+        setGifs([...gifs, ...data.newGifs]);
+      })
+      .catch(err => {
+        console.log('Error while fetching gifs:', err);
+      });
   }
 
   function onImageClick(e) {
-    setClickedGifId(e.target.id);
+    setGifToView(Number(e.target.id));
   }
 
   function closeLightbox() {
-    setClickedGifId(-1);
+    setGifToView(-1);
   }
 
   return (
@@ -69,18 +71,22 @@ function App() {
         onChange={onSearchTextChange}
         onKeyUp={onKeyUp} />
       <button className="search-button"
-        onClick={onSearchClick}>
+        onClick={onSearchClick}
+        disabled={fetchingNewSearch}>
         <span role="img" aria-label="magnify glass">🔍</span>
       </button>
       {!fetchingNewSearch && gifs.length > 0 ?
         <Gallery gifs={gifs}
           totalGifsCount={totalGifsCount}
-          onImageClick={onImageClick} 
+          onImageClick={onImageClick}
           fetchMoreGifs={fetchMoreGifs} />
         : null}
 
-      {clickedGifId > -1 ?
-        <Lightbox gifs={gifs} curGifId={clickedGifId} onCloseClick={closeLightbox} />
+      {gifToView > -1 ?
+        <Lightbox gifs={gifs}
+        gifToView={gifToView}
+        onCloseClick={closeLightbox}
+        setGifToView={setGifToView} />
         : null}
     </div>
   );
