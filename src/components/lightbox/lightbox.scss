@@ -28,20 +28,42 @@
       margin: auto;
       z-index: 200;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
       align-content: center;
 
       .focus-gif {
         transform: scale(0.01);
         opacity: 0;
-        transition: all 0.2s ease-out;
+        user-select: none;
+        transition: transform 0.2s ease-out, opacity 0.2s ease-out;
       }
 
       .original-view {
         transform: scale(1);
         opacity: 1;
+      }
+
+      .arrow {
+        // border: 1px dotted white;
+        height: 100vh;
+        width: 20%;
+        min-width: 100px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        opacity: 0.3;
+        background-position: center center;;
+        background-repeat: no-repeat;
+        transition: all 0.3s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
       }
     }
 

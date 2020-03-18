@@ -20,6 +20,16 @@ function Gallery({ gifs, totalGifsCount, onImageClick, fetchMoreGifs }) {
         }
     });
 
+    // function onImageLoaded() {
+    //     setLoadingImage(false);
+    // }
+
+    // function preloadImage(src) {
+    //     var img = new Image();
+    //     img.onload = () => { this.onImageLoaded() };
+    //     img.src = src;
+    // }
+
     return (
         <div className="gallery">
             <PageNav curPage={curPage}

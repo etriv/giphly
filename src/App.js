@@ -10,6 +10,7 @@ function App() {
   const [gifToView, setGifToView] = useState(-1);
   const [searchText, setSearchText] = useState('dogs');
   const [fetchingNewSearch, setFetchingNewSearch] = useState(false);
+  const [fetchingMore, setFetchingMore] = useState(false);
   const gifsBulkSize = 120;
 
   useEffect(onSearchClick, []); // Startup search (for development)
@@ -39,19 +40,25 @@ function App() {
       })
       .catch(err => {
         console.log('Error while fetching gifs:', err);
+        setFetchingNewSearch(false);
       });
   }
 
   function fetchMoreGifs() {
-    fetchGifs(searchText, gifs.length, gifsBulkSize)
-      .then(data => {
-        console.log('Fetched gifs:', data);
-        setTotalGifsCount(data.totalCount);
-        setGifs([...gifs, ...data.newGifs]);
-      })
-      .catch(err => {
-        console.log('Error while fetching gifs:', err);
-      });
+    if (!fetchingMore) {
+      setFetchingMore(true);
+      fetchGifs(searchText, gifs.length, gifsBulkSize)
+        .then(data => {
+          console.log('Fetched gifs:', data);
+          setFetchingMore(false);
+          setTotalGifsCount(data.totalCount);
+          setGifs([...gifs, ...data.newGifs]);
+        })
+        .catch(err => {
+          console.log('Error while fetching gifs:', err);
+          setFetchingMore(false);
+        });
+    }
   }
 
   function onImageClick(e) {
@@ -84,9 +91,10 @@ function App() {
 
       {gifToView > -1 ?
         <Lightbox gifs={gifs}
-        gifToView={gifToView}
-        onCloseClick={closeLightbox}
-        setGifToView={setGifToView} />
+          gifToView={gifToView}
+          onCloseClick={closeLightbox}
+          setGifToView={setGifToView}
+          fetchMoreGifs={fetchMoreGifs} />
         : null}
     </div>
   );
