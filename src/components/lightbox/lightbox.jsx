@@ -39,14 +39,42 @@ function Lightbox({ gifs, gifToView, setGifToView, onCloseClick, fetchMoreGifs }
                 <div id="left-arrow" className="arrow"
                     style={{ backgroundImage: `url(${leftArrow})` }} />
                 {gifToView < gifs.length ?
-                    <img id="gif-image"
-                        className={gifClasses}
-                        src={gifs[gifToView].gifUrl}
-                        alt="animated gif" />
+                    <GifContainer className={gifClasses}
+                        src={gifs[gifToView].gifUrl} />
                     : null}
                 <div id="right-arrow" className="arrow"
                     style={{ backgroundImage: `url(${rightArrow})` }} />
             </div>
+        </div>
+    );
+}
+
+function GifContainer({ src, className }) {
+    const [gifLoading, setGifLoading] = useState(false);
+    const [prevGifSrc, setPrevGifSrc] = useState(src);
+
+    if (src !== prevGifSrc) {
+        // TODO: Might be better to just remove and add a new img element
+        //preloadImage(src);
+        // const el = document.getElementById('anim-gif');
+        // el.remove();
+        setPrevGifSrc(src);
+    }
+
+    function preloadImage(src) {
+        setGifLoading(true);
+        var img = new Image();
+        img.onload = () => { setGifLoading(false); };
+        img.src = src;
+    }
+
+    return (
+        <div className={className}>
+            {!gifLoading ?
+                <img id="anim-gif" src={src} alt="animated gif" />
+                :
+                <p style={{ color: 'white' }}>Loading...</p>
+            }
         </div>
     );
 }
