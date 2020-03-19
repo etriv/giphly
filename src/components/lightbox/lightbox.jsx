@@ -40,14 +40,18 @@ function Lightbox({ gifs, gifToView, setGifToView, onCloseClick, fetchMoreGifs }
         <div className="lightbox" onClick={onMouseClick}>
             <div className="overlay" onClick={onCloseClick} />
             <div id="stage" className="stage">
+                {gifToView > 0 ? 
                 <div id="left-arrow" className="arrow"
                     style={{ backgroundImage: `url(${leftArrow})` }} />
+                    : <div className="broken-arrow" /> }
                 {gifToView < gifs.length ?
                     <GifContainer className={gifClasses}
                         src={gifs[gifToView].gifUrl} />
                     : null}
+                {gifToView < gifs.length - 1 ? 
                 <div id="right-arrow" className="arrow"
                     style={{ backgroundImage: `url(${rightArrow})` }} />
+                    : <div className="broken-arrow" /> }
             </div>
         </div>
     );

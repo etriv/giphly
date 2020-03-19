@@ -58,12 +58,18 @@
         opacity: 0.3;
         background-position: center center;;
         background-repeat: no-repeat;
-        transition: all 0.3s;
+        transition: opacity 0.3s;
 
         &:hover {
           opacity: 0.8;
         }
-
+      }
+      
+      .broken-arrow {
+        // border: 1px dotted white;
+        height: 50vh;
+        width: 20%;
+        min-width: 100px;
       }
     }
 
