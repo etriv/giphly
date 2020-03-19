@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './lightbox.scss';
+import GifContainer from '../gif-container/gif-container';
 import leftArrow from '../../images/left-arrow.png';
 import rightArrow from '../../images/right-arrow.png';
 
@@ -48,26 +49,6 @@ function Lightbox({ gifs, gifToView, setGifToView, onCloseClick, fetchMoreGifs }
                 <div id="right-arrow" className="arrow"
                     style={{ backgroundImage: `url(${rightArrow})` }} />
             </div>
-        </div>
-    );
-}
-
-function GifContainer({ src, className }) {
-    const [gifLoading, setGifLoading] = useState(false);
-    const [prevGifSrc, setPrevGifSrc] = useState(src);
-
-    if (src !== prevGifSrc) {
-        // Rerendering the entire img element for faster loading of the next gif
-        setPrevGifSrc(src);
-        setGifLoading(true);
-        setTimeout(() => setGifLoading(false), 0);
-    }
-
-    return (
-        <div id="anim-container" className={className}>
-            {!gifLoading ?
-                <img id="anim-gif" src={src} alt="animated gif" />
-                : null}
         </div>
     );
 }
