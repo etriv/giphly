@@ -5,6 +5,7 @@ import rightArrow from '../../images/right-arrow.png';
 
 function Lightbox({ gifs, gifToView, setGifToView, onCloseClick, fetchMoreGifs }) {
     const [gifClasses, setGifClasses] = useState('focus-gif');
+    const [fetchingMoreGifs, setFetchingMoreGifs] = useState(false);
 
     console.log('Rendering gif:', gifToView);
 
@@ -16,8 +17,10 @@ function Lightbox({ gifs, gifToView, setGifToView, onCloseClick, fetchMoreGifs }
             if (gifToView < gifs.length - 1) {
                 setGifToView(gifToView + 1);
                 const numGifsBeforeLimit = gifs.length - (gifToView + 1);
-                if (numGifsBeforeLimit <= 10) {
-                    fetchMoreGifs();
+                if (numGifsBeforeLimit <= 10 && !fetchingMoreGifs) {
+                    setFetchingMoreGifs(true);
+                    fetchMoreGifs()
+                        .then(() => setFetchingMoreGifs(false));
                 }
             }
         }
@@ -54,27 +57,17 @@ function GifContainer({ src, className }) {
     const [prevGifSrc, setPrevGifSrc] = useState(src);
 
     if (src !== prevGifSrc) {
-        // TODO: Might be better to just remove and add a new img element
-        //preloadImage(src);
-        // const el = document.getElementById('anim-gif');
-        // el.remove();
+        // Rerendering the entire img element for faster loading of the next gif
         setPrevGifSrc(src);
-    }
-
-    function preloadImage(src) {
         setGifLoading(true);
-        var img = new Image();
-        img.onload = () => { setGifLoading(false); };
-        img.src = src;
+        setTimeout(() => setGifLoading(false), 0);
     }
 
     return (
-        <div className={className}>
+        <div id="anim-container" className={className}>
             {!gifLoading ?
                 <img id="anim-gif" src={src} alt="animated gif" />
-                :
-                <p style={{ color: 'white' }}>Loading...</p>
-            }
+                : null}
         </div>
     );
 }

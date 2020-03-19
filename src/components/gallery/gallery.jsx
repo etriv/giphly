@@ -4,6 +4,7 @@ import PageNav from '../page-nav/page-nav';
 
 function Gallery({ gifs, totalGifsCount, onImageClick, fetchMoreGifs }) {
     const [curPage, setCurPage] = useState(1);
+    const [fetchingMoreGifs, setFetchingMoreGifs] = useState(false);
     const gifsPerPage = 12;
 
     function onPageChange(newPage) {
@@ -13,12 +14,13 @@ function Gallery({ gifs, totalGifsCount, onImageClick, fetchMoreGifs }) {
     useEffect(() => {
         // Fetch more gifs when the gallery is about to run out of gifs to display
         const pagesBeforeLimit = Math.ceil(gifs.length / gifsPerPage) - curPage;
-        // console.log('Pages before limit', pagesBeforeLimit);
 
-        if (pagesBeforeLimit <= 1) {
-            fetchMoreGifs();
+        if (pagesBeforeLimit <= 1 && !fetchingMoreGifs) {
+            setFetchingMoreGifs(true);
+            fetchMoreGifs()
+                .then(() => setFetchingMoreGifs(false));
         }
-    });
+    }, [gifs.length, curPage, fetchingMoreGifs, fetchMoreGifs]);
 
     // function onImageLoaded() {
     //     setLoadingImage(false);
