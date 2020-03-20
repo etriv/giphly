@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './gallery.scss';
 import PageNav from '../page-nav/page-nav';
+import StillContainer from '../still-container/still-container';
 
 function Gallery({ gifs, totalGifsCount, onImageClick, fetchMoreGifs }) {
     const [curPage, setCurPage] = useState(1);
@@ -22,16 +23,6 @@ function Gallery({ gifs, totalGifsCount, onImageClick, fetchMoreGifs }) {
         }
     }, [gifs.length, curPage, fetchingMoreGifs, fetchMoreGifs]);
 
-    // function onImageLoaded() {
-    //     setLoadingImage(false);
-    // }
-
-    // function preloadImage(src) {
-    //     var img = new Image();
-    //     img.onload = () => { this.onImageLoaded() };
-    //     img.src = src;
-    // }
-
     return (
         <div className="gallery">
             <PageNav curPage={curPage}
@@ -41,12 +32,10 @@ function Gallery({ gifs, totalGifsCount, onImageClick, fetchMoreGifs }) {
                 {gifs.length > 0 ?
                     gifs.slice((curPage - 1) * gifsPerPage, (curPage - 1) * gifsPerPage + gifsPerPage)
                         .map((gif, index) =>
-                            <div className="gif-container"
-                                style={{
-                                    backgroundImage: `url(${gif.stillUrl})`
-                                }}
-                                id={index + ((curPage - 1) * gifsPerPage)} key={index}
-                                onClick={onImageClick}></div>
+                            <StillContainer gif={gif}
+                            id={index + ((curPage - 1) * gifsPerPage)}
+                            key={index}
+                            onClick={onImageClick} />
                         )
                     : null}
             </div>
