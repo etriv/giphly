@@ -3,6 +3,7 @@ import './App.scss';
 import { fetchGifs } from './modules/giphy-manager';
 import Lightbox from './components/lightbox/lightbox';
 import Gallery from './components/gallery/gallery';
+import BeatLoader from "react-spinners/BeatLoader";
 
 function App() {
   const [gifs, setGifs] = useState([]);
@@ -11,7 +12,6 @@ function App() {
   const [searchText, setSearchText] = useState('dogs');
   const [fetchingNewSearch, setFetchingNewSearch] = useState(false);
   const gifsBulkSize = 120;
-
 
   useEffect(onSearchClick, []); // TODO: deactivate this startup search (for development)
 
@@ -84,7 +84,12 @@ function App() {
           totalGifsCount={totalGifsCount}
           onImageClick={onImageClick}
           fetchMoreGifs={fetchMoreGifs} />
-        : null}
+        :
+        <BeatLoader
+          css={"margin: 8rem auto"}
+          size={50}
+          color={"gray"} />
+      }
 
       {gifToView > -1 ?
         <Lightbox gifs={gifs}
