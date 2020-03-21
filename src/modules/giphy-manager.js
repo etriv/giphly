@@ -6,7 +6,6 @@ function fetchGifs(search, offset, limit) {
     let newGifs = [];
     return gf.search(search, { sort: 'relevant', offset, limit })
         .then((res) => {
-            
             if (res.meta.status === 200) {
                 // console.log(res);
                 newGifs = res.data.map(gif => ({

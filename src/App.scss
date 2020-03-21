@@ -15,6 +15,11 @@
     text-shadow: 2px 2px 1px $color4;
   }
 
+  .no-results {
+    margin: 1.5rem auto;
+    font-weight: bold;
+  }
+
   .search-area {
     display: flex;
     flex-direction: row;
