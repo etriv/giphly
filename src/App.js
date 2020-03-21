@@ -9,7 +9,7 @@ function App() {
   const [gifs, setGifs] = useState([]);
   const [totalGifsCount, setTotalGifsCount] = useState(-1);
   const [gifToView, setGifToView] = useState(-1);
-  const [searchText, setSearchText] = useState('dogs');
+  const [searchText, setSearchText] = useState('');
   const [fetchingNewSearch, setFetchingNewSearch] = useState(false);
   const gifsBulkSize = 120;
 
@@ -88,10 +88,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="title">Giphly!</h1>
+      <h1 className="title">Giphly!<span role="img" aria-label="snail">🐌</span></h1>
       <div className="search-area">
         <input name="search-text" className="search-box" type="text"
-          placeholder="✎..."
+          placeholder="✎ find gifs online..."
           value={searchText}
           onChange={onSearchTextChange}
           onKeyUp={onKeyUp} />
