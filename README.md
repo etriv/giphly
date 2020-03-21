@@ -1,7 +1,10 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Giphly! 🐌
+A simple front-end interface that uses Giphy API to search for gifs online.
+The project implements, in performance-minded fashion, it's own lightbox and gallery view.
+Main technologies: React, Sass.
 
 ## How to start the project
-Run in both the **server** and **client**:
+Just run:
 ```
 npm start
 ```
