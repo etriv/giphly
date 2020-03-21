@@ -68,17 +68,19 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Giphly!</h1>
-      <input name="search-text" className="search-box" type="text"
-        placeholder="✎..."
-        value={searchText}
-        onChange={onSearchTextChange}
-        onKeyUp={onKeyUp} />
-      <button className="search-button"
-        onClick={onSearchClick}
-        disabled={fetchingNewSearch}>
-        <span role="img" aria-label="magnify glass">🔍</span>
-      </button>
+      <h1 className="title">Giphly!</h1>
+      <div className="search-area">
+        <input name="search-text" className="search-box" type="text"
+          placeholder="✎..."
+          value={searchText}
+          onChange={onSearchTextChange}
+          onKeyUp={onKeyUp} />
+        <button className="search-button"
+          onClick={onSearchClick}
+          disabled={fetchingNewSearch}>
+          <span role="img" aria-label="magnify glass">SEARCH</span>
+        </button>
+      </div>
       {!fetchingNewSearch && gifs.length > 0 ?
         <Gallery gifs={gifs}
           totalGifsCount={totalGifsCount}
